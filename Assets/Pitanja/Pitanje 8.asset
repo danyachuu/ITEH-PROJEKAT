@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33686460354dd5f48ba795bd32fed494, type: 3}
   m_Name: Pitanje 8
   m_EditorClassIdentifier: 
-  pitanje: Unesi novo pitanje
+  pitanje: "Koja je klju\u010Dna razlika izme\u0111u HTML-a i drugih jezika za programiranje?"
+  odgovori:
+  - HTML se tesko uci
+  - HTML povezuje klijenta i server
+  - HTML nije programski jezik, vec sluzi za strukturu stranice
+  - HTML nije poznat jezik
+  tacanOdgovorIndeks: 2

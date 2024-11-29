@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33686460354dd5f48ba795bd32fed494, type: 3}
   m_Name: Pitanje 10
   m_EditorClassIdentifier: 
-  pitanje: Unesi novo pitanje
+  pitanje: Kako se HTML koristi zajedno sa CSS-om?
+  odgovori:
+  - HTML predstavlja klijenta, a CSS server
+  - "HTML strukturira sadr\u017Eaj, dok CSS defini\u0161e njegov izgled"
+  - HTML stvara niti korisnika, a CSS povezuje nit sa Internet provajderom
+  - 'HTML definise izgled i strukturu, a CSS funkcije '
+  tacanOdgovorIndeks: 1

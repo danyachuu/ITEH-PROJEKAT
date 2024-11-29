@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33686460354dd5f48ba795bd32fed494, type: 3}
   m_Name: Pitanje 7
   m_EditorClassIdentifier: 
-  pitanje: Unesi novo pitanje
+  pitanje: Koja je primarna svrha HTML-a?
+  odgovori:
+  - "Da strukturira sadr\u017Eaj na veb stranicama"
+  - Da ulepsa veb sajt
+  - Da omoguci komunikaciju izmedju klijenta i servera
+  - Da vrsi razmenu e-mailova
+  tacanOdgovorIndeks: 0

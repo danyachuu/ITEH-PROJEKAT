@@ -20,7 +20,7 @@ public class PitanjeSO : ScriptableObject
     {
         return tacanOdgovorIndeks;
     }
-    public string GetTacanOdgovor(int tacanOdgovorIndeks)
+    public string GetOdgovor(int tacanOdgovorIndeks)
     {
         return odgovori[tacanOdgovorIndeks];
     }
