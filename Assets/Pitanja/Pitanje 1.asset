@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pitanje: Koji element se koristi za pravljenje linka u HTML-u?
   odgovori:
-  - <b>
-  - <a>
-  - <link>
-  - <site>
+  - '"<p>"'
+  - '"<a>"'
+  - '"<links>"'
+  - '"<site>"'
   tacanOdgovorIndeks: 1

@@ -3,31 +3,65 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Threading;
 
 public class Kviz : MonoBehaviour
 {
-    [SerializeField] PitanjeSO pitanje;
+    [Header("Pitanja")]
+    [SerializeField] PitanjeSO trenutnoPitanje;
     [SerializeField] TextMeshProUGUI pitanjeTekst;
+    [SerializeField] List<PitanjeSO> questions = new List<PitanjeSO>();
 
+    [Header("Odgovori")]
     [SerializeField] GameObject[] ponudjeniOdgovori;
-
     int tacanOdgovorIndeks;
+    bool odgovorioRanije;
+
+    [Header("Dugmici")]
     [SerializeField] Sprite defaultAnswerSprite;
     [SerializeField] Sprite correctAnswerSprite;
 
+    [Header("Tajmer")]
+    [SerializeField] Image timerImage;
+    Tajmer timer;
 
 
     void Start()
     {
-       //DisplayQuestion();
-        GetNextQuestion();
+       
+        
+        timer = FindObjectOfType<Tajmer>();
 
+    }
 
+    void Update()
+    {
+        timerImage.fillAmount = timer.fillFraction;
+        if (timer.loadNextQuestion)
+        {
+            odgovorioRanije = false;
+            GetNextQuestion();
+            timer.loadNextQuestion = false;
+        }
+        else if(!odgovorioRanije && !timer.isAnsweringQuestion)
+        {
+            DisplayAnswer(-1);
+            SetButtonState(false);
+        }
     }
 
     public void OnAnswerSelected(int indeks)
     {
-        if (indeks == pitanje.GetTacanOdgovorIndeks())
+        DisplayAnswer(indeks);
+        odgovorioRanije=true;
+
+        SetButtonState(false);
+        timer.CancelTimer();
+    }
+
+    void DisplayAnswer(int indeks)
+    {
+        if (indeks == trenutnoPitanje.GetTacanOdgovorIndeks())
         {
             pitanjeTekst.text = "Tacan odgovor!";
             Image buttonImage = ponudjeniOdgovori[indeks].GetComponentInChildren<Image>();
@@ -35,20 +69,34 @@ public class Kviz : MonoBehaviour
         }
         else
         {
-            pitanjeTekst.text = $"Netacan odgovor... Tacan odgovor je {pitanje.GetTacanOdgovorIndeks()+1})";
-            Image buttonImage = ponudjeniOdgovori[pitanje.GetTacanOdgovorIndeks()].GetComponentInChildren<Image>();
+            pitanjeTekst.text = $"Netacan odgovor... Tacan odgovor je {trenutnoPitanje.GetTacanOdgovorIndeks() + 1})";
+            Image buttonImage = ponudjeniOdgovori[trenutnoPitanje.GetTacanOdgovorIndeks()].GetComponentInChildren<Image>();
             buttonImage.sprite = correctAnswerSprite;
 
         }
-        SetButtonState(false);
     }
 
     private void GetNextQuestion()
     {
-        SetButtonState(true);
-        SetDefaultButtonSprites();
-        DisplayQuestion();
+        if(questions.Count>0) 
+        { 
+            SetButtonState(true);
+            SetDefaultButtonSprites();
+            GetRandomQuestion();
+            DisplayQuestion();
+        }
 
+    }
+
+    private void GetRandomQuestion()
+    {
+        int indeks = Random.Range(0, questions.Count);
+        trenutnoPitanje = questions[indeks];
+        if (questions.Contains(trenutnoPitanje))
+        {
+            questions.Remove(trenutnoPitanje);
+        }
+        
     }
 
     private void SetDefaultButtonSprites()
@@ -62,12 +110,12 @@ public class Kviz : MonoBehaviour
 
     private void DisplayQuestion()
     {
-        pitanjeTekst.text = pitanje.GetQuestion();
+        pitanjeTekst.text = trenutnoPitanje.GetQuestion();
 
         for (int i = 0; i < ponudjeniOdgovori.Length; i++)
         {
             TextMeshProUGUI dugmeTekst = ponudjeniOdgovori[i].GetComponentInChildren<TextMeshProUGUI>();
-            dugmeTekst.text = pitanje.GetOdgovor(i);
+            dugmeTekst.text = trenutnoPitanje.GetOdgovor(i);
         }
     }
 

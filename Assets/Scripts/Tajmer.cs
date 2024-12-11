@@ -8,7 +8,9 @@ public class Tajmer : MonoBehaviour
     [SerializeField] float vremeZaOdgovor = 16f;
     [SerializeField] float vremeZaReview = 8f;
 
-    public bool isAnsweringQuestion;
+    public bool isAnsweringQuestion = false;
+    public bool loadNextQuestion;
+    public float fillFraction;
 
 
     void Update()
@@ -16,13 +18,24 @@ public class Tajmer : MonoBehaviour
         UpdateTimer();
     }
 
+    public void CancelTimer()
+    {
+        timerValue = 0;
+    }
+
+
+
     private void UpdateTimer()
     {
         timerValue -= Time.deltaTime;
 
         if (isAnsweringQuestion == true)
         {
-            if(timerValue <= 0)
+            if(timerValue > 0)
+            {
+                fillFraction = timerValue / vremeZaOdgovor;
+            }
+            else
             {
                 timerValue = vremeZaReview;
                 isAnsweringQuestion = false;
@@ -30,10 +43,15 @@ public class Tajmer : MonoBehaviour
         }
         else
         {
-            if (timerValue <= 0)
+            if (timerValue > 0)
+            {
+                fillFraction = timerValue / vremeZaReview;
+            }
+            else
             {
                 timerValue = vremeZaOdgovor;
                 isAnsweringQuestion = true;
+                loadNextQuestion = true;
             }
         }
 
