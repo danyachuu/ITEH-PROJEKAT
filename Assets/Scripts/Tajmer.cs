@@ -6,7 +6,7 @@ public class Tajmer : MonoBehaviour
 {
     float timerValue;
     [SerializeField] float vremeZaOdgovor = 16f;
-    [SerializeField] float vremeZaReview = 8f;
+    [SerializeField] float vremeZaReview = 7f;
 
     public bool isAnsweringQuestion = false;
     public bool loadNextQuestion;

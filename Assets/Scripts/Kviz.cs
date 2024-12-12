@@ -25,12 +25,21 @@ public class Kviz : MonoBehaviour
     [SerializeField] Image timerImage;
     Tajmer timer;
 
+    [Header("Skor")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    Score scoreKeeper;
+
+    [Header("Slajder")]
+    [SerializeField] Slider slajder;
+
+    public bool isComplete;
 
     void Start()
     {
-       
-        
         timer = FindObjectOfType<Tajmer>();
+        scoreKeeper = FindObjectOfType<Score>();
+        slajder.maxValue = 10;
+        slajder.value = 0;
 
     }
 
@@ -45,6 +54,11 @@ public class Kviz : MonoBehaviour
         }
         else if(!odgovorioRanije && !timer.isAnsweringQuestion)
         {
+            if(questions.Count < 10)
+            {
+                scoreText.text = "Skor: " + scoreKeeper.IzracunajSkor() + "%";
+            }
+            
             DisplayAnswer(-1);
             SetButtonState(false);
         }
@@ -57,6 +71,14 @@ public class Kviz : MonoBehaviour
 
         SetButtonState(false);
         timer.CancelTimer();
+
+        scoreText.text = "Skor: " + scoreKeeper.IzracunajSkor() + "%";
+
+        if(slajder.value == slajder.maxValue)
+        {
+            isComplete = true;
+        }
+
     }
 
     void DisplayAnswer(int indeks)
@@ -66,6 +88,8 @@ public class Kviz : MonoBehaviour
             pitanjeTekst.text = "Tacan odgovor!";
             Image buttonImage = ponudjeniOdgovori[indeks].GetComponentInChildren<Image>();
             buttonImage.sprite = correctAnswerSprite;
+            scoreKeeper.PovecajCorrectAnswers();
+            
         }
         else
         {
@@ -84,6 +108,11 @@ public class Kviz : MonoBehaviour
             SetDefaultButtonSprites();
             GetRandomQuestion();
             DisplayQuestion();
+
+            
+
+            scoreKeeper.PovecajVidjenaPitanja();
+            slajder.value++;
         }
 
     }
