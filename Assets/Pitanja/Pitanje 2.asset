@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pitanje: "Kako ozna\u010Diti naslov najve\u0107e veli\u010Dine u HTML-u?\n"
   odgovori:
-  - <h0>
-  - <main>
-  - <bigh>
-  - <h1>
+  - '"<h0>"'
+  - '"<main>"'
+  - '"<bigh>"'
+  - '"<h1>"'
   tacanOdgovorIndeks: 3

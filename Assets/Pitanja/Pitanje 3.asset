@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pitanje: "Kako se defini\u0161e tabela u HTML-u?"
   odgovori:
-  - <table>
-  - <grid>
-  - <list>
-  - <plot>
+  - '"<table>"'
+  - '"<grid>"'
+  - '"<list>"'
+  - '"<plot>"'
   tacanOdgovorIndeks: 0

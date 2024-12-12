@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pitanje: "Kako ozna\u010Diti tekst kao podebljan (bold) u HTML-u?"
   odgovori:
-  - <b>
-  - <i>
-  - <a>
-  - <black>
+  - '"b"'
+  - '"i"'
+  - '"a"'
+  - '"black"'
   tacanOdgovorIndeks: 0
