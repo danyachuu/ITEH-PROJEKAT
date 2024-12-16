@@ -15,7 +15,7 @@ public class Kviz : MonoBehaviour
     [Header("Odgovori")]
     [SerializeField] GameObject[] ponudjeniOdgovori;
     int tacanOdgovorIndeks;
-    bool odgovorioRanije;
+    bool odgovorioRanije = true;
 
     [Header("Dugmici")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -34,7 +34,7 @@ public class Kviz : MonoBehaviour
 
     public bool isComplete;
 
-    void Start()
+    void Awake()
     {
         timer = FindObjectOfType<Tajmer>();
         scoreKeeper = FindObjectOfType<Score>();
@@ -48,6 +48,12 @@ public class Kviz : MonoBehaviour
         timerImage.fillAmount = timer.fillFraction;
         if (timer.loadNextQuestion)
         {
+            if (slajder.value == slajder.maxValue)
+            {
+                isComplete = true;
+                return;
+            }
+
             odgovorioRanije = false;
             GetNextQuestion();
             timer.loadNextQuestion = false;
@@ -57,6 +63,7 @@ public class Kviz : MonoBehaviour
             if(questions.Count < 10)
             {
                 scoreText.text = "Skor: " + scoreKeeper.IzracunajSkor() + "%";
+                
             }
             
             DisplayAnswer(-1);
@@ -74,10 +81,7 @@ public class Kviz : MonoBehaviour
 
         scoreText.text = "Skor: " + scoreKeeper.IzracunajSkor() + "%";
 
-        if(slajder.value == slajder.maxValue)
-        {
-            isComplete = true;
-        }
+       
 
     }
 
@@ -85,6 +89,7 @@ public class Kviz : MonoBehaviour
     {
         if (indeks == trenutnoPitanje.GetTacanOdgovorIndeks())
         {
+            AudioManager.Instance.PlaySFX("CorrectAnswer");
             pitanjeTekst.text = "Tacan odgovor!";
             Image buttonImage = ponudjeniOdgovori[indeks].GetComponentInChildren<Image>();
             buttonImage.sprite = correctAnswerSprite;
@@ -93,6 +98,11 @@ public class Kviz : MonoBehaviour
         }
         else
         {
+            if(timer.timerValue>=2.999f)
+            {
+                AudioManager.Instance.PlaySFX("IncorrectAnswer");
+            }
+            
             pitanjeTekst.text = $"Netacan odgovor... Tacan odgovor je {trenutnoPitanje.GetTacanOdgovorIndeks() + 1})";
             Image buttonImage = ponudjeniOdgovori[trenutnoPitanje.GetTacanOdgovorIndeks()].GetComponentInChildren<Image>();
             buttonImage.sprite = correctAnswerSprite;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tajmer : MonoBehaviour
 {
-    float timerValue;
+    public float timerValue;
     [SerializeField] float vremeZaOdgovor = 16f;
     [SerializeField] float vremeZaReview = 3f;
 
@@ -59,7 +59,6 @@ public class Tajmer : MonoBehaviour
         {
             timerValue = vremeZaOdgovor;
         }
-        Debug.Log(timerValue);
     }
 
 

@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
     Kviz kviz;
     KrajIgre krajIgre;
 
-    void Start()
+    private void Awake()
     {
         kviz = FindObjectOfType<Kviz>();
         krajIgre = FindObjectOfType<KrajIgre>();
+    }
 
+    void Start()
+    {
         kviz.gameObject.SetActive(true);
         krajIgre.gameObject.SetActive(false);
-
 
     }
 
@@ -26,12 +28,14 @@ public class GameManager : MonoBehaviour
         {
             kviz.gameObject.SetActive(false);
             krajIgre.gameObject.SetActive(true);
+            krajIgre.ShowFinalScore();
         }
 
     }
 
     public void OnReplayLevel()
     {
+        AudioManager.Instance.PlaySFX("DefaultClick");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

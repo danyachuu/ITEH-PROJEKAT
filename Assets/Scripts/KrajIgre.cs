@@ -10,10 +10,10 @@ public class KrajIgre : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
         scoreKeeper = FindObjectOfType<Score>();
-        ShowFinalScore();
+        
     }
 
     public void ShowFinalScore()
