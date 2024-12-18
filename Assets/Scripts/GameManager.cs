@@ -39,7 +39,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-
+    public void BackToMainMenu()
+    {
+        AudioManager.Instance.PlaySFX("DefaultClick");
+        SceneManager.LoadSceneAsync(0);
+    }
 
 
 

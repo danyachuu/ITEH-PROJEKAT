@@ -9,8 +9,10 @@ public class Kviz : MonoBehaviour
 {
     [Header("Pitanja")]
     [SerializeField] PitanjeSO trenutnoPitanje;
+    [SerializeField] PitanjeSO dodatoPitanje;
     [SerializeField] TextMeshProUGUI pitanjeTekst;
     [SerializeField] List<PitanjeSO> questions = new List<PitanjeSO>();
+    private List<PitanjeSO> questionsIzabrana = new List<PitanjeSO>();
 
     [Header("Odgovori")]
     [SerializeField] GameObject[] ponudjeniOdgovori;
@@ -36,6 +38,7 @@ public class Kviz : MonoBehaviour
 
     void Awake()
     {
+        GetTenQuestions();
         timer = FindObjectOfType<Tajmer>();
         scoreKeeper = FindObjectOfType<Score>();
         slajder.maxValue = 10;
@@ -60,7 +63,7 @@ public class Kviz : MonoBehaviour
         }
         else if(!odgovorioRanije && !timer.isAnsweringQuestion)
         {
-            if(questions.Count < 10)
+            if(questionsIzabrana.Count < 10)
             {
                 scoreText.text = "Skor: " + scoreKeeper.IzracunajSkor() + "%";
                 
@@ -112,7 +115,8 @@ public class Kviz : MonoBehaviour
 
     private void GetNextQuestion()
     {
-        if(questions.Count>0) 
+        Debug.Log(questionsIzabrana.Count);
+        if(questionsIzabrana.Count>0) 
         { 
             SetButtonState(true);
             SetDefaultButtonSprites();
@@ -127,13 +131,28 @@ public class Kviz : MonoBehaviour
 
     }
 
+    private void GetTenQuestions()
+    {
+        
+        for (int i = 0; i < 10; i++)
+        {
+            int indeks = Random.Range(0, questions.Count);
+            dodatoPitanje = questions[indeks];
+            if (questions.Contains(dodatoPitanje))
+            {
+                questionsIzabrana.Add(dodatoPitanje);
+                questions.Remove(dodatoPitanje);
+            }
+        }
+    }
+
     private void GetRandomQuestion()
     {
-        int indeks = Random.Range(0, questions.Count);
-        trenutnoPitanje = questions[indeks];
-        if (questions.Contains(trenutnoPitanje))
+        int indeks = Random.Range(0, questionsIzabrana.Count);
+        trenutnoPitanje = questionsIzabrana[indeks];
+        if (questionsIzabrana.Contains(trenutnoPitanje))
         {
-            questions.Remove(trenutnoPitanje);
+            questionsIzabrana.Remove(trenutnoPitanje);
         }
         
     }
